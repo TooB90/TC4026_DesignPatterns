@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_RemoteControl" Id="{0fffc3b9-fe55-4ebb-bbc3-e01e7f08edb6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RemoteControl
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	itfCommand		: I_Command;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="pressButton" Id="{f0edecf8-a039-40d8-aa69-8ef55080de41}">
+      <Declaration><![CDATA[METHOD pressButton : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[itfCommand.execute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setCommand" Id="{5d4c0292-797a-4526-9ab2-5dbaac6da562}">
+      <Declaration><![CDATA[METHOD setCommand : BOOL
+VAR_INPUT
+	command		:I_Command;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[itfCommand := command;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

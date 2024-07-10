@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleCommandPattern" Id="{0b5fce4a-53b1-4bb8-acaa-a4a69c6d571b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleCommandPattern
+VAR
+	fbLight				:FB_Light;
+	fbLightOnCmd		:FB_LightOnCommand(rfbLight := fbLight);
+	fbLightOffCmd		:FB_LightOffCommand(rfbLight := fbLight);
+	fbRemoteControl		:FB_RemoteControl;
+	
+	iState				:INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbLight();
+
+CASE iState OF
+	1:
+		fbRemoteControl.setCommand(fbLightOnCmd);
+		fbRemoteControl.pressButton();
+		fbRemoteControl.setCommand(fbLightOffCmd);
+		fbRemoteControl.pressButton();
+		iState := 0;
+	2:
+		fbRemoteControl.setCommand(fbLightOffCmd);
+		fbRemoteControl.pressButton();
+		iState := 0;
+END_CASE
+
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

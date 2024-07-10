@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Light" Id="{84668e9a-79dd-49d1-a8d0-e22b0ab3419f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Light
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	bIsOn	:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="turnLightOff" Id="{cdc6f5ba-67c7-4fc7-9b0e-91eca7d205fa}">
+      <Declaration><![CDATA[METHOD turnLightOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Light is off', strArg:= '');
+bIsOn := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="turnLightOn" Id="{1de21c0e-d2c3-4af7-ace3-0be53d378cc1}">
+      <Declaration><![CDATA[METHOD turnLightOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Light is on', strArg:= '');
+bIsOn := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -6,7 +6,10 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[]]></ST>
+      <ST><![CDATA[//********************
+// Command Pattern 
+//********************
+PRG_SampleCommandPattern();]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_LightOnCommand" Id="{3c9b1df0-47df-48d6-9f43-bd527e5d1f16}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LightOnCommand IMPLEMENTS I_Command
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_rfbLight		: REFERENCE TO FB_Light;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="execute" Id="{31bd1470-1b70-406d-a6b7-c4253b5f95ae}">
+      <Declaration><![CDATA[METHOD execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_rfbLight.turnLightOn();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{07e0f493-4d47-4563-ba8b-ebf6f22d78d4}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	rfbLight	:REFERENCE TO FB_Light;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_rfbLight REF= rfbLight;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
