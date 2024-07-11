@@ -6,10 +6,17 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//********************
+      <ST><![CDATA[//*************************************************************
+// Chain of Responsibility
+//*************************************************************
+	PRG_SampleChainOfResponsibility();
+
+//*************************************************************
 // Command Pattern 
-//********************
-PRG_SampleCommandPattern();]]></ST>
+//*************************************************************
+	PRG_SampleCommandPattern();
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleChainOfResponsibility" Id="{a42c5758-e742-4cd5-88a8-9313d1b16c3b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleChainOfResponsibility
+VAR
+	fbLvl1Handler			: FB_Level1Handler(ipNextHandler := fbLvl2Handler);
+	fbLvl2Handler			: FB_Level2Handler(ipNextHandler := fbLvl3Handler);
+	fbLvl3Handler			: FB_Level3Handler(ipNextHandler := NULL);
+	
+	sRequest				: STRING;
+	sOldRequest				: STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//*************************************************************
+// Call initial Request
+//*************************************************************
+IF sRequest <> sOldRequest THEN
+	sOldRequest := sRequest;
+	fbLvl1Handler.handleRequest(in_sRequest := sRequest);
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

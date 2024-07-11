@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Level1Handler" Id="{4ca8a919-e092-41fb-8238-128cddd60e28}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Level1Handler IMPLEMENTS I_Handler
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_ipNextHandler		:I_Handler;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{ce080cde-0cc4-4bfa-b634-455350a797e5}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	ipNextHandler	:I_Handler;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipNextHandler := ipNextHandler;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="handleRequest" Id="{46c7fbe6-7603-404c-a08d-da3f5c74d236}">
+      <Declaration><![CDATA[METHOD handleRequest : BOOL
+VAR_INPUT
+	in_sRequest		: STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF FIND(in_sRequest, 'Level 1') <> 0 THEN
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request solved by Level 1. Request: %s', strArg:= in_sRequest);
+ELSIF _ipNextHandler <> 0 THEN
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot solved by Level 1.', strArg:= '');
+	_ipNextHandler.handleRequest(in_sRequest);
+ELSE
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot solved by Level 1 and there is nobody else to pass it.', strArg:= '');
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

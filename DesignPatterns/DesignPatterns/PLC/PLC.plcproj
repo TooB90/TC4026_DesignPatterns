@@ -22,6 +22,21 @@
     <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ChainOfResponsibility\FB_Level1Handler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChainOfResponsibility\FB_Level2Handler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChainOfResponsibility\FB_Level3Handler.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChainOfResponsibility\I_Handler.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ChainOfResponsibility\PRG_SampleChainOfResponsibility.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CommandPattern\interfaces\I_Command.TcIO">
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +101,7 @@
     <Folder Include="CommandPattern\invoker" />
     <Folder Include="CommandPattern\receiver\Light" />
     <Folder Include="CommandPattern\receiver\Light\commands" />
+    <Folder Include="ChainOfResponsibility" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

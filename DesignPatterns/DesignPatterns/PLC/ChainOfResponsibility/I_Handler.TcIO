@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Handler" Id="{cc386116-5f2e-4e00-a127-9f41f328216d}">
+    <Declaration><![CDATA[INTERFACE I_Handler
+]]></Declaration>
+    <Method Name="handleRequest" Id="{61fe22be-00f2-4ee8-84a9-7537e79d74a2}">
+      <Declaration><![CDATA[METHOD handleRequest : BOOL
+VAR_INPUT
+	in_sRequest		: STRING;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
