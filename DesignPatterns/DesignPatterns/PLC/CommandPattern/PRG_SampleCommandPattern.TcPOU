@@ -3,29 +3,114 @@
   <POU Name="PRG_SampleCommandPattern" Id="{0b5fce4a-53b1-4bb8-acaa-a4a69c6d571b}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PRG_SampleCommandPattern
 VAR
-	fbLight				:FB_Light;
-	fbLightOnCmd		:FB_LightOnCommand(rfbLight := fbLight);
-	fbLightOffCmd		:FB_LightOffCommand(rfbLight := fbLight);
-	fbRemoteControl		:FB_RemoteControl;
+	fbLight								: FB_Light;
+	// Commands
+	fbLightOnCmd						: FB_CmdLightOn(ipLight := fbLight);
+	fbLightOffCmd						: FB_CmdLightOff(ipLight := fbLight);
+	fbIncreaseBrightnessCmd				: FB_CmdLightChangeBrightness(ipLight := fbLight, rBrightnessChange:= 10.0);
+	fbDecreaseBrightnessCmd				: FB_CmdLightChangeBrightness(ipLight := fbLight, rBrightnessChange:= -10.0);
+	fbChangeColorFav1Cmd				: FB_CmdLightChangeColor(ipLight := fbLight, eColor:= E_ColorCodes.Red);
+	fbChangeColorFav2Cmd				: FB_CmdLightChangeColor(ipLight := fbLight, eColor:= E_ColorCodes.Green);
+	// Invoker
+	fbRemoteControl						: FB_RemoteControl(ipCmdOn:= fbLightOnCmd, ipCmdOff:= fbLightOffCmd, ipCmdFav1:= fbIncreaseBrightnessCmd, ipCmdFav2:= fbDecreaseBrightnessCmd);
 	
-	iState				:INT;
+	// Test events
+	bChangeUpDownToColorControl			: BOOL;
+	bChangeUpDownToBrightnessControl	: BOOL;
+	
+	eOldFav1Color						: E_ColorCodes;
+	eFav1Color							: E_ColorCodes;	
+	eOldFav2Color						: E_ColorCodes;
+	eFav2Color							: E_ColorCodes;
+	
+	rOldIncreaseSteps					: REAL;
+	rIncreaseSteps						: REAL;	
+	rOldDecreaseSteps					: REAL;
+	rDecreaseSteps						: REAL;	
+	
+	bPressOn							: BOOL;
+	bPressOff							: BOOL;
+	bPressFav1							: BOOL;
+	bPressFav2							: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbLight();
+      <ST><![CDATA[//*************************************************************
+// Call Object Light
+//*************************************************************
+	fbLight();
 
-CASE iState OF
-	1:
-		fbRemoteControl.setCommand(fbLightOnCmd);
-		fbRemoteControl.pressButton();
-		fbRemoteControl.setCommand(fbLightOffCmd);
-		fbRemoteControl.pressButton();
-		iState := 0;
-	2:
-		fbRemoteControl.setCommand(fbLightOffCmd);
-		fbRemoteControl.pressButton();
-		iState := 0;
-END_CASE
+//*************************************************************
+// Change Functionality of Remote Control
+//*************************************************************
+
+	//*************************************************************
+	// Color control
+	//*************************************************************
+	IF bChangeUpDownToColorControl THEN
+		bChangeUpDownToColorControl := FALSE;
+		fbRemoteControl.setCommands(
+										in_ipCmdOn		:= fbLightOnCmd, 
+										in_ipCmdOff		:= fbLightOffCmd, 
+										in_ipCmdFav1		:= fbChangeColorFav1Cmd, 
+										in_ipCmdFav2	:= fbChangeColorFav2Cmd);
+	END_IF
+	
+	IF eFav1Color <> eOldFav1Color THEN
+		eOldFav1Color := eFav1Color;
+		fbChangeColorFav1Cmd.setChangeColor(in_eNewChangeColor := eFav1Color);
+	END_IF
+	
+	IF eFav2Color <> eOldFav2Color THEN
+		eOldFav2Color := eFav2Color;
+		fbChangeColorFav2Cmd.setChangeColor(in_eNewChangeColor := eFav2Color);
+	END_IF
+	
+	//*************************************************************
+	// Brightness control
+	//*************************************************************
+	IF bChangeUpDownToBrightnessControl THEN
+		bChangeUpDownToBrightnessControl := FALSE;
+		fbRemoteControl.setCommands(
+										in_ipCmdOn		:= fbLightOnCmd, 
+										in_ipCmdOff		:= fbLightOffCmd, 
+										in_ipCmdFav1		:= fbIncreaseBrightnessCmd, 
+										in_ipCmdFav2	:= fbDecreaseBrightnessCmd);
+	END_IF
+	
+	IF rIncreaseSteps <> rOldIncreaseSteps THEN
+		rOldIncreaseSteps := rIncreaseSteps;
+		fbIncreaseBrightnessCmd.setChangeBrightness(in_rNewChangeBrightness := rIncreaseSteps);
+	END_IF
+	
+	IF rDecreaseSteps <> rOldDecreaseSteps THEN
+		rOldDecreaseSteps := rDecreaseSteps;
+		fbDecreaseBrightnessCmd.setChangeBrightness(in_rNewChangeBrightness := rDecreaseSteps);
+	END_IF
+
+//*************************************************************
+// Do Actions
+//*************************************************************
+	IF bPressOn THEN
+		bPressOn := FALSE;
+		fbRemoteControl.pressOn();
+	END_IF
+	
+	IF bPressOff THEN
+		bPressOff := FALSE;
+		fbRemoteControl.pressOff();
+	END_IF
+	
+	IF bPressFav1 THEN
+		bPressFav1 := FALSE;
+		fbRemoteControl.pressFav1();
+	END_IF
+	
+	IF bPressFav2 THEN
+		bPressFav2 := FALSE;
+		fbRemoteControl.pressFav2();
+	END_IF
+
 
 
 ]]></ST>

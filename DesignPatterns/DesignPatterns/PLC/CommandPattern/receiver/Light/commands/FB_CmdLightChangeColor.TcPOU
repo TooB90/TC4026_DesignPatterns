@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_CmdLightChangeColor" Id="{4d22d38f-aec0-4047-9688-676becc2ec55}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CmdLightChangeColor IMPLEMENTS I_Command
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_eChangeColor			: E_ColorCodes;
+	_ipLight				: I_Light;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="execute" Id="{cd1300d7-b9ec-4e3f-929f-a80d6750ff1a}">
+      <Declaration><![CDATA[METHOD execute : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipLight.changeColor(in_eNewColor:= _eChangeColor);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{9bba34a8-16b2-42e2-902f-d61de745c9d7}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	eColor : E_ColorCodes;
+	ipLight: I_Light;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipLight := ipLight;
+_eChangeColor := eColor;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setChangeColor" Id="{02277b55-ba3d-4e03-a543-21234959938a}">
+      <Declaration><![CDATA[METHOD setChangeColor : BOOL
+VAR_INPUT
+	in_eNewChangeColor	: E_ColorCodes;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_eChangeColor := in_eNewChangeColor;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

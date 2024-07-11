@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Light" Id="{84668e9a-79dd-49d1-a8d0-e22b0ab3419f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Light IMPLEMENTS I_LIGHT
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_rBrightness	: REAL;
+	_eColor			: E_ColorCodes;
+	_bIsOn			: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="bIsOn" Id="{8270bcdb-2158-40e9-9bd0-190fa713dc55}">
+      <Declaration><![CDATA[PROPERTY bIsOn : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{dcbb406f-3974-452b-a5f4-ac69dcac9006}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bIsOn := _bIsOn;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="changeBrightness" Id="{57f983fa-9ec0-4463-966a-c8656399e396}">
+      <Declaration><![CDATA[METHOD changeBrightness : BOOL
+VAR_INPUT
+	in_rNewBrightness	: REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF in_rNewBrightness > 100.0 THEN
+	_rBrightness := 100.0;
+ELSIF in_rNewBrightness < 0.0 THEN
+	_rBrightness := 0.0;
+ELSE
+	_rBrightness := in_rNewBrightness;
+END_IF
+
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'New Brightness: %s', strArg:= TO_STRING(_rBrightness));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="changeColor" Id="{35832c5b-741c-468e-9d60-9df6a0411286}">
+      <Declaration><![CDATA[METHOD changeColor : BOOL
+VAR_INPUT
+	in_eNewColor	:E_ColorCodes;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_eColor := in_eNewColor;
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'New Color: %s', strArg:= TO_STRING(_eColor));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="eColor" Id="{8c3c62d0-1299-4984-a32c-b7fe4da3b262}">
+      <Declaration><![CDATA[PROPERTY eColor : E_ColorCodes
+]]></Declaration>
+      <Get Name="Get" Id="{75fdcde8-b065-48c1-adf8-bfd4a4cb7a49}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[eColor := _eColor;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="rBrightness" Id="{8300d079-f5e0-4cf7-be9a-d86a7280d1a3}">
+      <Declaration><![CDATA[PROPERTY rBrightness : REAL
+]]></Declaration>
+      <Get Name="Get" Id="{17fc815d-3391-472d-9455-e88e81ac13af}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[rBrightness := _rBrightness;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="turnLightOff" Id="{cdc6f5ba-67c7-4fc7-9b0e-91eca7d205fa}">
+      <Declaration><![CDATA[METHOD turnLightOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bIsOn := FALSE;
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Light is off', strArg:= '');
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Brightness: %s', strArg:= TO_STRING(_rBrightness));
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Color: %s', strArg:= TO_STRING(_eColor));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="turnLightOn" Id="{1de21c0e-d2c3-4af7-ace3-0be53d378cc1}">
+      <Declaration><![CDATA[METHOD turnLightOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_bIsOn := TRUE;
+
+IF _rBrightness <= 0.0 THEN
+	_rBrightness := 100.0;
+END_IF
+
+IF _eColor = E_ColorCodes.Black THEN
+	_eColor := E_ColorCodes.White;
+END_IF
+
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Light is on', strArg:= '');
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Brightness: %s', strArg:= TO_STRING(_rBrightness));
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Color: %s', strArg:= TO_STRING(_eColor));]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1">
-  <POU Name="FB_LightOnCommand" Id="{3c9b1df0-47df-48d6-9f43-bd527e5d1f16}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_LightOnCommand IMPLEMENTS I_Command
+  <POU Name="FB_CmdLightOn" Id="{3c9b1df0-47df-48d6-9f43-bd527e5d1f16}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CmdLightOn IMPLEMENTS I_Command
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	_rfbLight		: REFERENCE TO FB_Light;
+	_ipLight				: I_Light;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -17,7 +17,7 @@ END_VAR
       <Declaration><![CDATA[METHOD execute : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_rfbLight.turnLightOn();]]></ST>
+        <ST><![CDATA[_ipLight.turnLightOn();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_Init" Id="{07e0f493-4d47-4563-ba8b-ebf6f22d78d4}">
@@ -29,11 +29,11 @@ METHOD FB_Init: BOOL
 VAR_INPUT
     bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
     bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
-	rfbLight	:REFERENCE TO FB_Light;
+	ipLight: I_Light;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[_rfbLight REF= rfbLight;]]></ST>
+        <ST><![CDATA[_ipLight := ipLight;]]></ST>
       </Implementation>
     </Method>
   </POU>

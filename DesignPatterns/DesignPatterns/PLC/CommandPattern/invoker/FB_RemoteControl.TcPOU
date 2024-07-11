@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_RemoteControl" Id="{0fffc3b9-fe55-4ebb-bbc3-e01e7f08edb6}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_RemoteControl
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_ipCmdOn		: I_Command;
+	_ipCmdOff		: I_Command;
+	_ipCmdFav1		: I_Command;
+	_ipCmdFav2		: I_Command;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{df35de67-378b-4526-8f81-db417112d02e}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	ipCmdOn		: I_Command;
+	ipCmdOff	: I_Command;
+	ipCmdFav1	: I_Command;
+	ipCmdFav2	: I_Command;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdOn		:= ipCmdOn;
+_ipCmdOff		:= ipCmdOff;
+_ipCmdFav1		:= ipCmdFav1;
+_ipCmdFav2		:= ipCmdFav2;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="pressFav1" Id="{5db5c202-1e57-480f-a858-17f5ef9fa11b}">
+      <Declaration><![CDATA[METHOD pressFav1 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdFav1.execute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="pressFav2" Id="{69d6c324-22f4-4746-a244-050b8f1896f4}">
+      <Declaration><![CDATA[METHOD pressFav2 : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdFav2.execute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="pressOff" Id="{84ac41c5-bad7-47c2-b919-be66a020d556}">
+      <Declaration><![CDATA[METHOD pressOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdOff.execute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="pressOn" Id="{f0edecf8-a039-40d8-aa69-8ef55080de41}">
+      <Declaration><![CDATA[METHOD pressOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdOn.execute();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setCommands" Id="{3544135b-48a9-46c3-a722-f0f52753316c}">
+      <Declaration><![CDATA[METHOD setCommands : BOOL
+VAR_INPUT
+	in_ipCmdOn		: I_Command;
+	in_ipCmdOff		: I_Command;
+	in_ipCmdFav1	: I_Command;
+	in_ipCmdFav2	: I_Command;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipCmdOn		:= in_ipCmdOn;
+_ipCmdOff		:= in_ipCmdOff;
+_ipCmdFav1		:= in_ipCmdFav1;
+_ipCmdFav2		:= in_ipCmdFav2;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Light" Id="{8ad8afa3-1d92-4135-8ad6-42218d8d7506}">
+    <Declaration><![CDATA[INTERFACE I_Light
+]]></Declaration>
+    <Property Name="bIsOn" Id="{f80d03a0-8d7f-4fbd-b11f-fdf07e6907ec}">
+      <Declaration><![CDATA[PROPERTY bIsOn : BOOL]]></Declaration>
+      <Get Name="Get" Id="{38267145-8e9e-4060-bb49-626265b16652}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="changeBrightness" Id="{e349acd3-ff6c-4876-8841-3ca034b8cb63}">
+      <Declaration><![CDATA[METHOD changeBrightness : BOOL
+VAR_INPUT
+	in_rNewBrightness	:REAL;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="changeColor" Id="{fe63f06c-5c3b-4a8c-b3aa-661684998043}">
+      <Declaration><![CDATA[METHOD changeColor : BOOL
+VAR_INPUT
+	in_eNewColor	:E_ColorCodes;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="eColor" Id="{95abfeba-0e79-41a2-a8b1-ce6458a56102}">
+      <Declaration><![CDATA[PROPERTY eColor : E_ColorCodes]]></Declaration>
+      <Get Name="Get" Id="{4f2cbe78-ab39-48f7-ac28-c537038da46b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="rBrightness" Id="{53f67a20-62b6-4370-97a9-2d7b9abaffd6}">
+      <Declaration><![CDATA[PROPERTY rBrightness : REAL]]></Declaration>
+      <Get Name="Get" Id="{a29d5c33-4824-46e5-aeb1-a0cfc5a2cd91}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="turnLightOff" Id="{b61d4950-f124-48cb-88b4-8e2eadd227a1}">
+      <Declaration><![CDATA[METHOD turnLightOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="turnLightOn" Id="{e93f2052-179f-42e7-87f8-f4b96779fa36}">
+      <Declaration><![CDATA[METHOD turnLightOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

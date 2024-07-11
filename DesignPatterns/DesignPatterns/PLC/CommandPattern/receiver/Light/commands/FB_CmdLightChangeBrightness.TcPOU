@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_CmdLightChangeBrightness" Id="{b0431ffd-eae3-445d-8bc7-b44354da616a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CmdLightChangeBrightness IMPLEMENTS I_Command
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_rBrightnessChange		: REAL;
+	_ipLight				: I_Light;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="execute" Id="{565f6baa-89be-4df8-93f1-791eda5842fd}">
+      <Declaration><![CDATA[METHOD execute : BOOL]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipLight.changeBrightness(in_rNewBrightness:= (_ipLight.rBrightness + _rBrightnessChange));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{c87ae7f5-314f-453b-a319-b0edbc611eee}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	rBrightnessChange :REAL;
+	ipLight: I_Light;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipLight := ipLight;
+_rBrightnessChange := rBrightnessChange;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="setChangeBrightness" Id="{3b65e41e-1d74-4936-8f4b-77f0831dd567}">
+      <Declaration><![CDATA[METHOD setChangeBrightness : BOOL
+VAR_INPUT
+	in_rNewChangeBrightness	: REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_rBrightnessChange := in_rNewChangeBrightness;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

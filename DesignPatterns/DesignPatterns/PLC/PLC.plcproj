@@ -16,24 +16,40 @@
     <Implicit_KindOfTask>{9226b4f9-a581-484c-99ab-4f95c7cc15ff}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{d4de7dc6-09ae-4d64-b409-377841697b71}</Implicit_Jitter_Distribution>
     <LibraryReferences>{4fb8af97-10ca-4e0d-8274-b6e8dad92a4f}</LibraryReferences>
+    <Released>false</Released>
+    <AllowChecksForLibrary>false</AllowChecksForLibrary>
+    <POUsForPropertyAccessIncluded>false</POUsForPropertyAccessIncluded>
+    <GlobalVersionStructureIncluded>false</GlobalVersionStructureIncluded>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CommandPattern\commands\FB_LightOnCommand.TcPOU">
+    <Compile Include="CommandPattern\interfaces\I_Command.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommandPattern\commands\FB_LightOffCommand.TcPOU">
+    <Compile Include="CommandPattern\receiver\E_ColorCodes.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CommandPattern\commands\I_Command.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommandPattern\devices\FB_Light.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="CommandPattern\FB_RemoteControl.TcPOU">
+    <Compile Include="CommandPattern\invoker\FB_RemoteControl.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommandPattern\PRG_SampleCommandPattern.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\commands\FB_CmdLightChangeBrightness.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\commands\FB_CmdLightChangeColor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\commands\FB_CmdLightOff.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\commands\FB_CmdLightOn.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\FB_Light.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandPattern\receiver\Light\I_Light.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MAIN.TcPOU">
@@ -65,8 +81,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommandPattern" />
-    <Folder Include="CommandPattern\commands" />
-    <Folder Include="CommandPattern\devices" />
+    <Folder Include="CommandPattern\interfaces" />
+    <Folder Include="CommandPattern\receiver" />
+    <Folder Include="CommandPattern\invoker" />
+    <Folder Include="CommandPattern\receiver\Light" />
+    <Folder Include="CommandPattern\receiver\Light\commands" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
