@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_ElementIterator" Id="{90168fdc-378d-4d3b-a3a0-06fa153f6fd6}">
+    <Declaration><![CDATA[INTERFACE I_ElementIterator
+]]></Declaration>
+    <Method Name="hasNext" Id="{19521e06-0ba5-4e48-9269-78bf5d83de3f}">
+      <Declaration><![CDATA[METHOD hasNext : BOOL
+VAR_INPUT
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="init" Id="{5d044c9d-5410-4f47-9432-cceeeed1afd0}">
+      <Declaration><![CDATA[METHOD init : BOOL
+VAR_IN_OUT
+	io_astElements	:ARRAY[*] OF ST_Element;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="next" Id="{96bdd19c-8425-4533-b154-e301f401dc13}">
+      <Declaration><![CDATA[METHOD next : ST_Element;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

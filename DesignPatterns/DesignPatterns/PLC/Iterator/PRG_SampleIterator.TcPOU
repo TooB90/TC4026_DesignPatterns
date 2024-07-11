@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleIterator" Id="{252e518e-8011-414d-b025-0b6ba96a9ad3}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleIterator
+VAR
+	fbElementsStation1				: FB_ElementsStation1;
+	fbElementStation1Iterator   	: REFERENCE TO FB_ElementIterator;
+	fbElementsStation2				: FB_ElementsStation2;
+	fbElementStation2Iterator   	: REFERENCE TO FB_ElementIterator;
+	
+	bIterateStation1				: BOOL;
+	bIterateStation2				: BOOL;
+END_VAR
+
+VAR_TEMP
+	stElement						:ST_Element;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbElementsStation1();
+fbElementsStation2();
+
+
+IF bIterateStation1 THEN
+	bIterateStation1 := FALSE;
+	
+	fbElementStation1Iterator REF= fbElementsStation1.createIterator();
+	WHILE fbElementStation1Iterator.hasNext() DO
+		stElement := fbElementStation1Iterator.next();
+		ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= '%s found.', strArg:= stElement.sName);
+	END_WHILE
+END_IF
+
+IF bIterateStation2 THEN
+	bIterateStation2 := FALSE;
+	
+	fbElementStation2Iterator REF= fbElementsStation2.createIterator();
+	WHILE fbElementStation2Iterator.hasNext() DO
+		stElement := fbElementStation2Iterator.next();
+		ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= '%s found.', strArg:= stElement.sName);
+	END_WHILE
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

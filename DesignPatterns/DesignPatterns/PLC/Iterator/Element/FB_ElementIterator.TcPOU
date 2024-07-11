@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ElementIterator" Id="{286cbf6e-9d81-4be3-b012-a4a90e1fb91e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElementIterator IMPLEMENTS I_ElementIterator
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_pElementData		: POINTER TO ST_Element;
+	_diNumOfElements	: DINT;
+	_diIndex			: DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="hasNext" Id="{e35d0595-4a25-4de0-9938-125e4881d2a7}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD hasNext : BOOL
+VAR
+	
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _pElementData = 0 THEN
+	RETURN;
+END_IF
+
+hasNext := _diIndex < _diNumOfElements;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="init" Id="{b63e8828-6048-4c9a-95fb-f76d10f8c2b8}">
+      <Declaration><![CDATA[METHOD init : BOOL
+VAR_IN_OUT
+	io_astElements	:ARRAY[*] OF ST_Element;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_pElementData 		:= io_astElements;
+_diNumOfElements 	:= UPPER_BOUND(io_astElements, 1);
+_diIndex			:= LOWER_BOUND(io_astElements, 1);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="next" Id="{b0abfcdf-40eb-4e50-90de-678e65291584}">
+      <Declaration><![CDATA[METHOD next : ST_Element
+VAR
+	stElement :ST_Element;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _pElementData = 0 THEN
+	RETURN;
+END_IF
+
+IF _diIndex < _diNumOfElements THEN
+	MEMCPY(srcAddr:= (_pElementData + (_diIndex * SIZEOF(stElement))), destAddr:= ADR(stElement), n:= SIZEOF(stElement));
+	next := stElement;
+	_diIndex := _diIndex + 1;
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

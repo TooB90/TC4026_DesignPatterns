@@ -67,6 +67,27 @@
     <Compile Include="CommandPattern\receiver\Light\I_Light.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Iterator\Collections\FB_ElementsStation1.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\Collections\FB_ElementsStation2.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\Element\FB_ElementIterator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\Element\I_ElementIterator.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\Element\I_IterableElementCollection.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\Element\ST_Element.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Iterator\PRG_SampleIterator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -102,6 +123,9 @@
     <Folder Include="CommandPattern\receiver\Light" />
     <Folder Include="CommandPattern\receiver\Light\commands" />
     <Folder Include="ChainOfResponsibility" />
+    <Folder Include="Iterator" />
+    <Folder Include="Iterator\Element" />
+    <Folder Include="Iterator\Collections" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_IterableElementCollection" Id="{1b1f58f0-94ac-49f1-969c-bd29e8847c8b}">
+    <Declaration><![CDATA[INTERFACE I_IterableElementCollection
+]]></Declaration>
+    <Method Name="createIterator" Id="{05b3aa24-8817-442d-84e9-4ef418fc1650}">
+      <Declaration><![CDATA[METHOD createIterator : REFERENCE TO FB_ElementIterator
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

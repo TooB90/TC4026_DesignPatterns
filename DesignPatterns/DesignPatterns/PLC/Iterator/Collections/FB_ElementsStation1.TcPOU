@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ElementsStation1" Id="{88232b5c-0c39-445c-8ec1-d567b6956d65}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElementsStation1 IMPLEMENTS I_IterableElementCollection
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_astElements			: ARRAY[0..MAX_ELEMENTS] OF ST_Element;	
+	_fbIterator				: FB_ElementIterator;
+END_VAR
+
+VAR CONSTANT
+	MAX_ELEMENTS			: INT := 30;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="createIterator" Id="{d9c88ef7-cb75-49f7-946b-d6f2cacc01d4}">
+      <Declaration><![CDATA[METHOD createIterator : REFERENCE TO FB_ElementIterator
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_fbIterator.init(io_astElements := _astElements);
+createIterator REF= _fbIterator;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{a2c25e1f-f044-4f1c-b864-6e08c7f1e779}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+END_VAR
+VAR 
+	i : INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i:= 0 TO MAX_ELEMENTS DO
+	_astElements[i].sName:= CONCAT('Element Station 1 No: ', TO_STRING(i + 1));
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
