@@ -126,6 +126,7 @@
     <Folder Include="Iterator" />
     <Folder Include="Iterator\Element" />
     <Folder Include="Iterator\Collections" />
+    <Folder Include="Mediator" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

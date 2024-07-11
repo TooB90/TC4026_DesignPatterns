@@ -15,8 +15,8 @@ VAR
 	fbRemoteControl						: FB_RemoteControl(ipCmdOn:= fbLightOnCmd, ipCmdOff:= fbLightOffCmd, ipCmdFav1:= fbIncreaseBrightnessCmd, ipCmdFav2:= fbDecreaseBrightnessCmd);
 	
 	// Test events
-	bChangeUpDownToColorControl			: BOOL;
-	bChangeUpDownToBrightnessControl	: BOOL;
+	bChangeToColorControl				: BOOL;
+	bChangeToBrightnessControl			: BOOL;
 	
 	eOldFav1Color						: E_ColorCodes;
 	eFav1Color							: E_ColorCodes;	
@@ -47,12 +47,12 @@ END_VAR
 	//*************************************************************
 	// Color control
 	//*************************************************************
-	IF bChangeUpDownToColorControl THEN
-		bChangeUpDownToColorControl := FALSE;
+	IF bChangeToColorControl THEN
+		bChangeToColorControl := FALSE;
 		fbRemoteControl.setCommands(
 										in_ipCmdOn		:= fbLightOnCmd, 
 										in_ipCmdOff		:= fbLightOffCmd, 
-										in_ipCmdFav1		:= fbChangeColorFav1Cmd, 
+										in_ipCmdFav1	:= fbChangeColorFav1Cmd, 
 										in_ipCmdFav2	:= fbChangeColorFav2Cmd);
 	END_IF
 	
@@ -69,12 +69,12 @@ END_VAR
 	//*************************************************************
 	// Brightness control
 	//*************************************************************
-	IF bChangeUpDownToBrightnessControl THEN
-		bChangeUpDownToBrightnessControl := FALSE;
+	IF bChangeToBrightnessControl THEN
+		bChangeToBrightnessControl := FALSE;
 		fbRemoteControl.setCommands(
 										in_ipCmdOn		:= fbLightOnCmd, 
 										in_ipCmdOff		:= fbLightOffCmd, 
-										in_ipCmdFav1		:= fbIncreaseBrightnessCmd, 
+										in_ipCmdFav1	:= fbIncreaseBrightnessCmd, 
 										in_ipCmdFav2	:= fbDecreaseBrightnessCmd);
 	END_IF
 	
