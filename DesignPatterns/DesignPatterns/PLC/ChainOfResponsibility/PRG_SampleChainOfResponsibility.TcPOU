@@ -3,12 +3,16 @@
   <POU Name="PRG_SampleChainOfResponsibility" Id="{a42c5758-e742-4cd5-88a8-9313d1b16c3b}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM PRG_SampleChainOfResponsibility
 VAR
-	fbLvl1Handler			: FB_Level1Handler(ipNextHandler := fbLvl2Handler);
-	fbLvl2Handler			: FB_Level2Handler(ipNextHandler := fbLvl3Handler);
-	fbLvl3Handler			: FB_Level3Handler(ipNextHandler := NULL);
+	fbLvl1Handler			: FB_Level1Handler();
+	fbLvl2Handler			: FB_Level2Handler();
+	fbLvl3Handler			: FB_Level3Handler();
+	
 	
 	sRequest				: STRING;
 	sOldRequest				: STRING;
+	bRequestHandled			: BOOL;
+	aipHandlers				: ARRAY[0..2] OF I_Handler;
+	iCurrentHandlerIndex	: INT;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -17,7 +21,22 @@ END_VAR
 //*************************************************************
 IF sRequest <> sOldRequest THEN
 	sOldRequest := sRequest;
-	fbLvl1Handler.handleRequest(in_sRequest := sRequest);
+	
+	aipHandlers[0] := fbLvl1Handler;
+	aipHandlers[1] := fbLvl2Handler;
+	aipHandlers[2] := fbLvl3Handler;
+	bRequestHandled := FALSE;
+	
+	FOR iCurrentHandlerIndex:= 0 TO 2 DO
+		bRequestHandled := aipHandlers[iCurrentHandlerIndex].handleRequest(in_sRequest := sRequest);
+		IF bRequestHandled THEN
+			EXIT;
+		END_IF
+	END_FOR
+	
+	IF NOT bRequestHandled THEN
+		ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot be solved by anyone. Request: %s', strArg:= sRequest);
+	END_IF
 END_IF]]></ST>
     </Implementation>
   </POU>

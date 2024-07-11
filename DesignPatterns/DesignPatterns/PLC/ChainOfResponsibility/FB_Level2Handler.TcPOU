@@ -7,41 +7,24 @@ END_VAR
 VAR_OUTPUT
 END_VAR
 VAR
-	_ipNextHandler		:I_Handler;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="FB_Init" Id="{9a8cc553-e09a-43e8-9f5f-0c0b5f4c7b73}">
-      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
-//The return value is not evaluated. For a specific influence, you can also declare the
-//methods explicitly and provide additional code there with the standard initialization
-//code. You can evaluate the return value.
-METHOD FB_Init: BOOL
-VAR_INPUT
-    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
-    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
-	ipNextHandler	:I_Handler;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[_ipNextHandler := ipNextHandler;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="handleRequest" Id="{9fbd0ee6-f036-4853-8dd4-9d55f6f15d41}">
       <Declaration><![CDATA[METHOD handleRequest : BOOL
 VAR_INPUT
 	in_sRequest		: STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF FIND(in_sRequest, 'Level 2') <> 0 THEN
+        <ST><![CDATA[handleRequest := FALSE;
+
+IF FIND(in_sRequest, 'Level 2') <> 0 THEN
 	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request solved by Level 2. Request: %s', strArg:= in_sRequest);
-ELSIF _ipNextHandler <> 0 THEN
-	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot solved by Level 2.', strArg:= '');
-	_ipNextHandler.handleRequest(in_sRequest);
+	handleRequest := TRUE;
 ELSE
-	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot solved by Level 2 and there is nobody else to pass it.', strArg:= '');	
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Request cannot be solved by Level 2. Request: %s', strArg:= in_sRequest);
 END_IF]]></ST>
       </Implementation>
     </Method>
