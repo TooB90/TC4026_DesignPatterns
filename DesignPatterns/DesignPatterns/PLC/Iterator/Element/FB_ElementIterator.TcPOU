@@ -16,8 +16,7 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="hasNext" Id="{e35d0595-4a25-4de0-9938-125e4881d2a7}">
-      <Declaration><![CDATA[{warning 'Add method implementation '}
-METHOD hasNext : BOOL
+      <Declaration><![CDATA[METHOD hasNext : BOOL
 VAR
 	
 END_VAR]]></Declaration>
