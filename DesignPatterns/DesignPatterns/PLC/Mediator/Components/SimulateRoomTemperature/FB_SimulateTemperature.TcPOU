@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SimulateTemperature" Id="{75522a6d-25a6-4161-bdce-8a35b9b45045}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SimulateTemperature
+VAR_INPUT
+	in_bTempShouldRise	: BOOL;
+END_VAR
+VAR_OUTPUT
+	out_bSimTemperature	: REAL;
+END_VAR
+VAR
+	_fbChangingRate			: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Changing Rate
+_fbChangingRate(IN:= NOT _fbChangingRate.Q, PT := T#1S);
+
+IF NOT _fbChangingRate.Q THEN
+	RETURN;
+END_IF
+
+IF in_bTempShouldRise THEN
+	
+	IF out_bSimTemperature < 30.0 THEN
+		
+		out_bSimTemperature := out_bSimTemperature + 1;
+
+	END_IF	
+	
+ELSE
+
+	IF out_bSimTemperature > 8.0 THEN
+		
+		out_bSimTemperature := out_bSimTemperature - 1;
+
+	END_IF	
+
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

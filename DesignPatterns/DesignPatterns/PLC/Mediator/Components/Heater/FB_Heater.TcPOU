@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Heater" Id="{450972ca-1fdf-4fbe-9545-c2fcf4932a30}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Heater IMPLEMENTS I_Heater
+VAR_INPUT
+END_VAR
+VAR_OUTPUT	
+END_VAR
+VAR
+	_sName				: STRING;
+	_sLocation			: STRING;
+	_bIsOn				: BOOL;
+	_ipMediator			: I_Mediator;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="bIsOn" Id="{0c23158f-309a-4a8c-a722-a67ba408d9dd}">
+      <Declaration><![CDATA[PROPERTY bIsOn : Bool]]></Declaration>
+      <Get Name="Get" Id="{5df2c8be-306a-4651-a958-d13b01a1ae9f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[bIsOn := _bIsOn;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="FB_Init" Id="{5cd92b30-2b63-4152-948a-7cfe78a12246}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)  
+	sName: STRING;
+	sLocation: STRING;
+	ipMediator: I_Mediator; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipMediator := ipMediator;
+_sName := sName;
+_sLocation := sLocation;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="sLocation" Id="{1b3a63f9-3a3c-44ea-b91c-edc7d8004a4d}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY sLocation : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{27a95824-3754-4559-891e-9a439ff1a575}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sLocation := _sLocation;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="sName" Id="{ef27bbfb-6ff0-484d-a6ee-0b4933c79ac6}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY sName : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{d193c2ca-5ee0-49c3-bcf8-4689c61e50b1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sName := _sName;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="turnOff" Id="{f2a2d256-a72a-4cf1-8c6d-3ec3897d4e3b}">
+      <Declaration><![CDATA[METHOD turnOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT _bIsOn THEN
+	
+	RETURN;
+
+END_IF
+
+
+_bIsOn := FALSE;
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= '%s turned heater off.', strArg:= CONCAT(_sName, CONCAT('|', _sLocation)));
+
+// Notify moderator about the event
+_ipMediator.notify(in_sSenderName:= _sName, in_sEvent := 'Heater off');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="turnOn" Id="{33eede28-454f-4be5-abf1-9a08b3dd38f6}">
+      <Declaration><![CDATA[METHOD turnOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF _bIsOn THEN
+	
+	RETURN;
+
+END_IF
+
+_bIsOn := TRUE;
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= '%s turned heater on.', strArg:= CONCAT(_sName, CONCAT('|', _sLocation)));
+
+// Notify moderator about the event
+_ipMediator.notify(in_sSenderName:= _sName, in_sEvent := 'Heater on');]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

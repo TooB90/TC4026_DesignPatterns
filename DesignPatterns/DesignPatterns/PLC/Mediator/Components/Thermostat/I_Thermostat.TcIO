@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Thermostat" Id="{21e5a810-7393-43f6-8d74-6ffb7812c432}">
+    <Declaration><![CDATA[INTERFACE I_Thermostat
+]]></Declaration>
+    <Property Name="rRequestedTemperature" Id="{3e95d6c7-d820-40ba-9f33-5ade74217fb0}">
+      <Declaration><![CDATA[PROPERTY rRequestedTemperature : REAL]]></Declaration>
+      <Get Name="Get" Id="{460a4531-f329-4556-b13a-1d15a832a946}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{15c205cb-925e-466e-8817-82e99fa0eb3f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="rTemperature" Id="{89f2d91b-b9f3-48bd-8497-b5069f7f3031}">
+      <Declaration><![CDATA[PROPERTY rTemperature : REAL]]></Declaration>
+      <Get Name="Get" Id="{3ed5f81b-28c5-4c49-99ba-dd36ad5fb036}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="sLocation" Id="{ea5b562b-c68a-4113-ac6d-af3d17be6993}">
+      <Declaration><![CDATA[PROPERTY sLocation : STRING]]></Declaration>
+      <Get Name="Get" Id="{ff15899d-b8ca-49a7-b60a-112c0f653d1f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="sName" Id="{268e05d3-97bd-4a54-bf5c-bf6069140488}">
+      <Declaration><![CDATA[PROPERTY sName : String]]></Declaration>
+      <Get Name="Get" Id="{1f848757-a42e-4875-8c1e-a1a81a46c2e4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Heater" Id="{0a742318-5dc4-4c64-be72-4a1a46f2c0d0}">
+    <Declaration><![CDATA[INTERFACE I_Heater
+]]></Declaration>
+    <Property Name="bIsOn" Id="{26e2f63b-a595-42f0-8172-a24d3d73610b}">
+      <Declaration><![CDATA[PROPERTY bIsOn : BOOL]]></Declaration>
+      <Get Name="Get" Id="{57c9ce38-48ae-477d-9b71-d8ef688e4901}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="sLocation" Id="{6c4bd0f7-70bd-43c3-84d7-0dd6a24b8b67}">
+      <Declaration><![CDATA[PROPERTY sLocation : STRING]]></Declaration>
+      <Get Name="Get" Id="{881f8fb2-065a-46f2-b239-1900129e154b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="sName" Id="{46405994-f45b-441a-8273-473de1d1cadf}">
+      <Declaration><![CDATA[PROPERTY sName : String]]></Declaration>
+      <Get Name="Get" Id="{ffd0d958-fd9e-47ac-ae5c-51a4dc7c8f63}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="turnOff" Id="{dc657b2d-56b7-480b-8710-9aa8a7b7dc94}">
+      <Declaration><![CDATA[METHOD turnOff : Bool
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="turnOn" Id="{a611f38d-d9fd-4374-a772-0716e7ca7759}">
+      <Declaration><![CDATA[METHOD turnOn : Bool
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

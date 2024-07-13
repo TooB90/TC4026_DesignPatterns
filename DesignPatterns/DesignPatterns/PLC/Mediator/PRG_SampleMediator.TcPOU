@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleMediator" Id="{58a835cc-59a6-494d-bb96-524223e4b13d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleMediator
+VAR
+	fbSmartHomeDevice			:FB_SmartHome;	
+
+	fbHeaterKitchen				:FB_Heater(sName:= 'Heater', sLocation := 'Kitchen', ipMediator:= fbSmartHomeDevice);
+	fbHeaterBedroom				:FB_Heater(sName:= 'Heater', sLocation := 'Bedroom', ipMediator:= fbSmartHomeDevice);
+	
+	fbThermostatKitchen			:FB_Thermostat(sName:= 'Thermostat', sLocation := 'Kitchen', rRequestedTemperature := 20.0, ipMediator:= fbSmartHomeDevice);
+	fbThermostatBedroom			:FB_Thermostat(sName:= 'Door', sLocation := 'Bedroom', rRequestedTemperature := 14.0, ipMediator:= fbSmartHomeDevice);
+	
+	fbRoomTempKitchen			:FB_SimulateTemperature;
+	fbRoomTempBedroom			:FB_SimulateTemperature;
+	
+	bAddAllDevices				:BOOL := TRUE; // Event to add all devices to Mediator
+	bRemoveAllDevices			:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//*************************************************************
+// Call Objects
+//*************************************************************
+	fbSmartHomeDevice();
+	
+	fbHeaterKitchen();
+	fbHeaterBedroom();
+	
+	fbThermostatKitchen(in_rTemperature := fbRoomTempKitchen.out_bSimTemperature);
+	fbThermostatBedroom(in_rTemperature := fbRoomTempBedroom.out_bSimTemperature);
+	
+	fbRoomTempKitchen(in_bTempShouldRise := fbHeaterKitchen.bIsOn);
+	fbRoomTempBedroom(in_bTempShouldRise := fbHeaterBedroom.bIsOn);
+	
+//*************************************************************
+// Add Objects to Smart Home Device
+//*************************************************************	
+IF bAddAllDevices THEN
+	
+	bAddAllDevices := FALSE;
+	
+	fbSmartHomeDevice.addHeater(fbHeaterKitchen);
+	//fbSmartHomeDevice.addHeater(fbHeaterBedroom);
+	
+	fbSmartHomeDevice.addThermostat(fbThermostatKitchen);
+	//fbSmartHomeDevice.addThermostat(fbThermostatBedroom);
+	
+END_IF
+
+IF bRemoveAllDevices THEN
+	
+	bRemoveAllDevices := FALSE;
+	
+	fbSmartHomeDevice.removeHeater(fbHeaterKitchen);
+	fbSmartHomeDevice.removeHeater(fbHeaterBedroom);
+	
+	fbSmartHomeDevice.removeThermostat(fbThermostatKitchen);
+	fbSmartHomeDevice.removeThermostat(fbThermostatBedroom);
+	
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

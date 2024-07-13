@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_SmartHome" Id="{833fb255-e211-4479-97ef-739109ff470d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_SmartHome IMPLEMENTS I_Mediator
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_aipHeater				: ARRAY [0..MAX_HEATER] OF I_Heater;
+	_aipThermostat			: ARRAY [0..MAX_THERMOSTAT] OF I_Thermostat;
+END_VAR
+VAR CONSTANT
+	MAX_HEATER				: INT := 5;
+	MAX_THERMOSTAT			: INT := 10;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="addHeater" Id="{07b533af-8c18-4d17-8400-bfdba3df3f48}">
+      <Declaration><![CDATA[METHOD addHeater : BOOL
+VAR_INPUT
+	in_ipHeater		: I_Heater;
+END_VAR
+
+VAR
+	bAdded	: BOOL;
+	i		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[addHeater := FALSE;
+
+FOR i := 0 TO (MAX_HEATER - 1) DO
+	
+	IF _aipHeater[i] = 0 THEN
+		
+		_aipHeater[i] := in_ipHeater;
+		addHeater := TRUE;
+		EXIT;
+		
+	END_IF
+	
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="addThermostat" Id="{0d25dff1-ad1d-4a27-a7b9-ba5a2f8d229c}">
+      <Declaration><![CDATA[METHOD addThermostat : BOOL
+VAR_INPUT
+	in_ipThermostat		: I_Thermostat;
+END_VAR
+
+VAR
+	i		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[addThermostat := FALSE;
+
+FOR i := 0 TO (MAX_THERMOSTAT - 1) DO
+	
+	IF _aipThermostat[i] = 0 THEN
+		
+		_aipThermostat[i] := in_ipThermostat;
+		addThermostat := TRUE;
+		EXIT;
+		
+	END_IF
+	
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getHeaterByLocation" Id="{16602780-aed8-4296-825b-ad60c87ae120}">
+      <Declaration><![CDATA[METHOD PRIVATE getHeaterByLocation : BOOL
+VAR_INPUT
+	in_sLocation 		: STRING;
+END_VAR
+VAR_OUTPUT
+	out_ipHeater		: I_Heater;
+END_VAR
+
+VAR
+	i					: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Init
+getHeaterByLocation 	:= FALSE;
+out_ipHeater		:= 0;
+
+// Loop through list
+FOR i:= 0 TO (MAX_HEATER - 1) DO
+	
+	// Check if interface is valid
+	IF _aipHeater[i] = 0 THEN
+		
+		CONTINUE;
+		
+	END_IF
+	
+	IF _aipHeater[i].sLocation = in_sLocation THEN
+		
+		getHeaterByLocation := TRUE;
+		out_ipHeater := _aipHeater[i];
+		RETURN;
+		
+	END_IF
+	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getHeaterByName" Id="{a270b979-ce34-4774-8ae2-129b1028df53}">
+      <Declaration><![CDATA[METHOD PRIVATE getHeaterByName : BOOL
+VAR_INPUT
+	in_sSenderName 		: STRING;
+END_VAR
+VAR_OUTPUT
+	out_ipHeater		: I_Heater;
+END_VAR
+
+VAR
+	i					: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Init
+getHeaterByName 	:= FALSE;
+out_ipHeater		:= 0;
+
+// Loop through list
+FOR i:= 0 TO (MAX_HEATER - 1) DO
+	
+	// Check if interface is valid
+	IF _aipHeater[i] = 0 THEN
+		
+		CONTINUE;
+		
+	END_IF
+	
+	IF _aipHeater[i].sName = in_sSenderName THEN
+		
+		getHeaterByName := TRUE;
+		out_ipHeater := _aipHeater[i];
+		RETURN;
+		
+	END_IF
+	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="getThermostatByName" Id="{9a8c4e38-ac4d-4ca6-983f-340cb2d0aa90}">
+      <Declaration><![CDATA[METHOD PRIVATE getThermostatByName : BOOL
+VAR_INPUT
+	in_sSenderName 		: STRING;
+END_VAR
+VAR_OUTPUT
+	out_ipThermostat	: I_Thermostat;
+END_VAR
+
+VAR
+	i					: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// Init
+getThermostatByName 	:= FALSE;
+out_ipThermostat	:= 0;
+
+// Loop through list
+FOR i:= 0 TO (MAX_THERMOSTAT - 1) DO
+	
+	// Check if interface is valid
+	IF _aipThermostat[i] = 0 THEN
+		
+		CONTINUE;
+		
+	END_IF
+	
+	IF _aipThermostat[i].sName = in_sSenderName THEN
+		
+		getThermostatByName := TRUE;
+		out_ipThermostat := _aipThermostat[i];
+		RETURN;
+		
+	END_IF
+	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="notify" Id="{37cdf54c-d000-4114-be2c-ce8380b58da1}">
+      <Declaration><![CDATA[METHOD notify : BOOL
+VAR_INPUT
+	in_sSenderName		: STRING;
+	in_sEvent			: STRING;
+END_VAR
+
+VAR
+	i					: INT;
+	ipTmpThermostat		: I_Thermostat;
+	ipTmpHeater			: I_Heater;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//*************************************************************
+// This is the point where the logic happens
+//*************************************************************
+
+// Check if sender is Heater
+IF getHeaterByName(in_sSenderName := in_sSenderName, out_ipHeater => ipTmpHeater) THEN
+	
+	// nothing to do here
+	RETURN;
+	
+END_IF
+
+// Check if sender is Thermostat
+IF getThermostatByName(in_sSenderName := in_sSenderName, out_ipThermostat => ipTmpThermostat) THEN
+	
+	// Check evenet
+	IF in_sEvent = 'It is to cold' THEN	
+		
+		// Decide which heater needs to be turned on		
+		IF getHeaterByLocation(in_sLocation := ipTmpThermostat.sLocation, out_ipHeater => ipTmpHeater) THEN
+			
+			ipTmpHeater.turnOn();
+			
+		END_IF
+		
+	ELSIF in_sEvent = 'It is to warm' THEN
+		
+		// Decide which heater needs to be turned on		
+		IF getHeaterByLocation(in_sLocation := ipTmpThermostat.sLocation, out_ipHeater => ipTmpHeater) THEN
+			
+			ipTmpHeater.turnOff();
+			
+		END_IF
+		
+	END_IF
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="removeHeater" Id="{b74c47ee-e3be-458e-92af-bfcec941f98a}">
+      <Declaration><![CDATA[METHOD removeHeater : BOOL
+VAR_INPUT
+	in_ipHeater		: I_Heater;
+END_VAR
+
+VAR
+	i		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[removeHeater := FALSE;
+
+FOR i := 0 TO (MAX_HEATER - 1) DO
+	
+	IF _aipHeater[i] = in_ipHeater THEN
+		
+		_aipHeater[i] := 0;
+		removeHeater := TRUE;
+		EXIT;
+		
+	END_IF
+	
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="removeThermostat" Id="{5e483ef9-0309-4af3-87bb-2ae26c7723bd}">
+      <Declaration><![CDATA[METHOD removeThermostat : BOOL
+VAR_INPUT
+	in_ipThermostat		: I_Thermostat;
+END_VAR
+
+VAR
+	i		: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[removeThermostat := FALSE;
+
+FOR i := 0 TO (MAX_THERMOSTAT - 1) DO
+	
+	IF _aipThermostat[i] = in_ipThermostat THEN
+		
+		_aipThermostat[i] := 0;
+		removeThermostat := TRUE;
+		EXIT;
+		
+	END_IF
+	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

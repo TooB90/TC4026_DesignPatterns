@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Thermostat" Id="{3ea7a1bb-604c-45e6-9f4f-ce4a1b059ede}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Thermostat IMPLEMENTS I_Thermostat
+VAR_INPUT
+	in_rTemperature		: REAL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_sName					: STRING;
+	_sLocation				: STRING;
+	_rTemperature			: REAL;
+	_rRequestedTemperature  : REAL;
+	_ipMediator				: I_Mediator;
+	_fbSamplingRate			: TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// Sampling Rate
+_fbSamplingRate(IN:= NOT _fbSamplingRate.Q, PT := T#2S);
+
+IF NOT _fbSamplingRate.Q THEN
+	RETURN;
+END_IF
+
+// Check Temperature changed
+IF in_rTemperature <> _rTemperature THEN
+	
+	_rTemperature := in_rTemperature;	
+	_ipMediator.notify(in_sSenderName:= _sName, in_sEvent := 'Temperature changed');
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= '%s temperature changed.', strArg:= CONCAT(_sName, CONCAT(' | ', CONCAT(_sLocation, CONCAT(' | ', TO_STRING(_rTemperature))))));
+	
+END_IF
+
+// Check Temperature dropped
+IF _rTemperature < _rRequestedTemperature THEN
+	
+	_ipMediator.notify(in_sSenderName:= _sName, in_sEvent := 'It is to cold');
+	
+END_IF
+
+// Check Temperature rised
+IF _rTemperature > _rRequestedTemperature THEN
+	
+	_ipMediator.notify(in_sSenderName:= _sName, in_sEvent := 'It is to warm');
+	
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{c7f0bceb-251f-4442-92f3-8eb1e6f0bc5b}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)  
+	sName: STRING;
+	sLocation: STRING;
+	rRequestedTemperature : REAL;
+	ipMediator: I_Mediator; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_ipMediator := ipMediator;
+_sName := sName;
+_sLocation := sLocation;
+_rRequestedTemperature := rRequestedTemperature;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="rRequestedTemperature" Id="{d56856d8-1cb7-4e75-90c5-42c537434b2e}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY rRequestedTemperature : REAL
+]]></Declaration>
+      <Get Name="Get" Id="{27c30631-57bf-487e-8dc0-f11f2ad2912f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{11bdaed0-3aba-43a7-bb64-e2ab51fca501}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="rTemperature" Id="{a4d0ebe2-ed3e-4499-b5f5-d39237aa5794}">
+      <Declaration><![CDATA[PROPERTY rTemperature : REAL]]></Declaration>
+      <Get Name="Get" Id="{106c916a-3da0-4a0d-abc4-b41692c73c0e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[rTemperature := _rTemperature;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="sLocation" Id="{b2290e93-9855-4bd4-94d1-03e9c1acc5f4}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY sLocation : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{61c15039-adfe-4d39-8773-87db50bed476}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sLocation := _sLocation;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="sName" Id="{d975bf69-265d-4e16-b79a-20cf4482ede1}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY sName : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{c703ae1e-6eb6-40dd-a617-dbc27c1a3859}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sName := _sName;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

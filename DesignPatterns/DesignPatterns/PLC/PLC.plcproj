@@ -91,6 +91,30 @@
     <Compile Include="MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Mediator\Components\Heater\FB_Heater.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Components\Heater\I_Heater.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Components\SimulateRoomTemperature\FB_SimulateTemperature.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Components\Thermostat\FB_Thermostat.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Components\Thermostat\I_Thermostat.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Mediator\FB_SmartHome.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\Mediator\I_Mediator.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mediator\PRG_SampleMediator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +151,11 @@
     <Folder Include="Iterator\Element" />
     <Folder Include="Iterator\Collections" />
     <Folder Include="Mediator" />
+    <Folder Include="Mediator\Components" />
+    <Folder Include="Mediator\Components\Heater" />
+    <Folder Include="Mediator\Components\SimulateRoomTemperature" />
+    <Folder Include="Mediator\Components\Thermostat" />
+    <Folder Include="Mediator\Mediator" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
