@@ -14,12 +14,22 @@ VAR
 	fbRoomTempKitchen			:FB_SimulateTemperature;
 	fbRoomTempBedroom			:FB_SimulateTemperature;
 	
+	bEnable						:BOOL;
 	bAddAllDevices				:BOOL := TRUE; // Event to add all devices to Mediator
 	bRemoveAllDevices			:BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[//*************************************************************
+// Disable Test enviroment
+//*************************************************************	
+	IF NOT bEnable THEN
+		
+		RETURN;
+		
+	END_IF
+
+//*************************************************************
 // Call Objects
 //*************************************************************
 	fbSmartHomeDevice();
