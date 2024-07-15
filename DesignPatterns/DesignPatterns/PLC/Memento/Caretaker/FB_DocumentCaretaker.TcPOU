@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_DocumentCaretaker" Id="{752366cd-b2de-46e8-ad35-1aa38eaf761c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_DocumentCaretaker
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	iSavedMementos		: INT;
+	iCurrentMemento		: INT;
+	astMementos			: ARRAY [0..MAX_MEMENTOS] OF ST_DocumentMemento;
+END_VAR
+
+VAR CONSTANT
+	MAX_MEMENTOS		: INT := 100;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="addMemento" Id="{a7c2bccd-9289-4a3a-8633-095e0cceb545}">
+      <Declaration><![CDATA[METHOD addMemento : BOOL
+VAR_INPUT
+	in_stMemento		: ST_DocumentMemento;
+END_VAR
+
+VAR
+	iIndexToStore		: INT;
+	i					: INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[iIndexToStore := iCurrentMemento + 1;
+
+IF iIndexToStore > MAX_MEMENTOS THEN
+	
+	RETURN;
+	
+END_IF
+
+astMementos[iIndexToStore] := in_stMemento;
+
+iCurrentMemento := iIndexToStore;
+iSavedMementos 	:= iIndexToStore;
+
+FOR i:= iIndexToStore + 1 TO  MAX_MEMENTOS DO
+	MEMSET(destAddr:= ADR(astMementos[i]), fillByte:= 0, n:= SIZEOF(astMementos[i]));
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="redoMemento" Id="{24a32390-d5e6-4dc0-a3f0-afcb773dfd4c}">
+      <Declaration><![CDATA[METHOD redoMemento : REFERENCE TO ST_DocumentMemento;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCurrentMemento >= iSavedMementos THEN
+	
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Redo not possible.', strArg:= '');
+	RETURN;
+	
+END_IF
+
+iCurrentMemento := iCurrentMemento + 1;
+redoMemento REF= astMementos[iCurrentMemento];]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="undoMemento" Id="{aeaa1a88-da01-4fbd-ae2f-cfbdbbe59c22}">
+      <Declaration><![CDATA[METHOD undoMemento : REFERENCE TO ST_DocumentMemento;
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF iCurrentMemento  <= 0 THEN
+	
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Undo not possible.', strArg:= '');
+	RETURN;
+	
+END_IF
+
+iCurrentMemento := iCurrentMemento - 1;
+undoMemento REF= astMementos[iCurrentMemento];]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

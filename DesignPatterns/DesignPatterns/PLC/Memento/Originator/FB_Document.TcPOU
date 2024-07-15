@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Document" Id="{a002d7e7-2009-46a9-835b-ea03020a0bd2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Document
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_sContent		:STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="restoreFromMemento" Id="{ee5e9c02-17de-4aed-b37c-e875d6cdac20}">
+      <Declaration><![CDATA[METHOD restoreFromMemento : BOOL
+VAR_INPUT
+	in_rstMemento		: REFERENCE TO ST_DocumentMemento;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT __ISVALIDREF(in_rstMemento) THEN
+	RETURN;
+END_IF
+
+_sContent := in_rstMemento.sContent;
+
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Memento restored. Content: %s', strArg:= _sContent);]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="sContent" Id="{6f34124d-2ff2-4a3c-81d0-7e3cba3c31f6}">
+      <Declaration><![CDATA[PROPERTY sContent : String]]></Declaration>
+      <Get Name="Get" Id="{a1b7c23d-4f3a-4c3d-a6c3-258edeb6f1b0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sContent := _sContent;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="takeSnapshot" Id="{fa9bde5e-34b4-47e1-be88-e62498a90cdc}">
+      <Declaration><![CDATA[METHOD takeSnapshot : ST_DocumentMemento]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[takeSnapshot.sContent := _sContent;
+
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'New Memento created. Content: %s', strArg:= _sContent);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="write" Id="{40621333-3db4-48f2-b4de-b4b51587dcc5}">
+      <Declaration><![CDATA[METHOD write : BOOL
+VAR_INPUT
+	in_sText	: STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sContent := in_sText;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

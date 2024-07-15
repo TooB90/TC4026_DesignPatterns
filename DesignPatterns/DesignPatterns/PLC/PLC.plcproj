@@ -115,6 +115,18 @@
     <Compile Include="Mediator\PRG_SampleMediator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Memento\Caretaker\FB_DocumentCaretaker.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Memento\Memento\ST_DocumentMemento.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Memento\Originator\FB_Document.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Memento\PRG_SampleMemento.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -156,6 +168,10 @@
     <Folder Include="Mediator\Components\SimulateRoomTemperature" />
     <Folder Include="Mediator\Components\Thermostat" />
     <Folder Include="Mediator\Mediator" />
+    <Folder Include="Memento" />
+    <Folder Include="Memento\Memento" />
+    <Folder Include="Memento\Caretaker" />
+    <Folder Include="Memento\Originator" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

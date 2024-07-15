@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <DUT Name="ST_DocumentMemento" Id="{7629035c-dc15-47af-a8b2-9fc25fc82d71}">
+    <Declaration><![CDATA[TYPE ST_DocumentMemento :
+STRUCT
+	sContent		: STRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleMemento" Id="{f33723ce-e02f-47af-b58c-09576d2a030c}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleMemento
+VAR
+	fbDocument			: FB_Document;
+	fbHistory			: FB_DocumentCaretaker;
+	
+	sNewText			: STRING;
+	sOldText			: STRING;
+	sActText			: STRING;
+	
+	bUndo				: BOOL;
+	bRedo				: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//*************************************************************
+// Add a new Text to the Document
+//*************************************************************	
+sActText := fbDocument.sContent; // Actual Text just for debugging
+
+IF sNewText <> sOldText THEN
+	
+	sOldText := sNewText;
+	fbDocument.write(sNewText);
+	fbHistory.addMemento(fbDocument.takeSnapshot());
+	
+END_IF
+
+//*************************************************************
+// Undo/ Redo actions
+//*************************************************************	
+IF bUndo THEN
+	
+	bUndo := FALSE;
+	fbDocument.restoreFromMemento(fbHistory.undoMemento());
+	
+END_IF
+
+IF bRedo THEN
+	
+	bRedo := FALSE;
+	fbDocument.restoreFromMemento(fbHistory.redoMemento());
+	
+END_IF
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
