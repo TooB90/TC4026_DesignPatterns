@@ -127,6 +127,18 @@
     <Compile Include="Memento\PRG_SampleMemento.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Observer\PRG_SampleObserver.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Observer\Publisher\FB_Publisher.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Observer\Subscriber\FB_Subscriber.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Observer\Subscriber\I_Subscriber.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
@@ -172,6 +184,9 @@
     <Folder Include="Memento\Memento" />
     <Folder Include="Memento\Caretaker" />
     <Folder Include="Memento\Originator" />
+    <Folder Include="Observer" />
+    <Folder Include="Observer\Subscriber" />
+    <Folder Include="Observer\Publisher" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

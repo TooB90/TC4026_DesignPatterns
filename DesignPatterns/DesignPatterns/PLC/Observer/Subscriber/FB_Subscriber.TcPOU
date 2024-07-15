@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Subscriber" Id="{70c40a34-d894-42f5-bdf0-8fb2f84ec1fe}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Subscriber IMPLEMENTS I_Subscriber
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_sName				: STRING;
+	_sPublisherContent	: STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_Init" Id="{1d6f0229-85cf-403a-80bf-ab8a41e70fca}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)
+	sName	: STRING;   
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[_sName := sName;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="update" Id="{494fcd53-ba52-49d9-a260-440222b95e61}">
+      <Declaration><![CDATA[METHOD update : BOOL
+VAR_INPUT
+	in_sContent			: STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Hey its me %s, i got noftiyed with fresh new content', strArg:= _sName);
+_sPublisherContent := in_sContent;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

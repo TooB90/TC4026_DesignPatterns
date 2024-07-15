@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleObserver" Id="{dd71ddae-2cc4-46d4-a63f-482d7814ba36}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleObserver
+VAR
+	fbPublisher					: FB_Publisher;
+	fbSubscriber1				: FB_Subscriber(sName := 'anton');
+	fbSubscriber2				: FB_Subscriber(sName := 'beton');
+	
+	bSubscribe1					: BOOL;
+	bUnsubscribe1				: BOOL;
+	bSubscribe2					: BOOL;
+	bUnsubscribe2				: BOOL;
+	
+	bNotify				: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bSubscribe1 THEN
+	
+	bSubscribe1 := FALSE;
+	fbPublisher.subscribe(fbSubscriber1);
+	
+END_IF
+
+IF bUnsubscribe1 THEN
+	
+	bUnsubscribe1 := FALSE;
+	fbPublisher.unsubscribe(fbSubscriber1);
+	
+END_IF
+
+IF bSubscribe2 THEN
+	
+	bSubscribe2 := FALSE;
+	fbPublisher.subscribe(fbSubscriber2);
+	
+END_IF
+
+IF bUnsubscribe2 THEN
+	
+	bUnsubscribe2 := FALSE;
+	fbPublisher.unsubscribe(fbSubscriber2);
+	
+END_IF
+
+IF bNotify THEN
+	
+	bNotify := FALSE;
+	fbPublisher.notifySubscriber();
+	
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Subscriber" Id="{3f63c4dc-1a6a-4f91-8756-8a38f183caeb}">
+    <Declaration><![CDATA[INTERFACE I_Subscriber
+]]></Declaration>
+    <Method Name="update" Id="{0e8c22c7-2307-4396-afc8-1a0a21b53673}">
+      <Declaration><![CDATA[METHOD update : BOOL
+VAR_INPUT
+	in_sContent			: STRING;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

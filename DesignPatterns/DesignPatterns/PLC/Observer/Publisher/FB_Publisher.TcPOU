@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Publisher" Id="{19ff1677-f3e0-4d89-8670-ce1dde662067}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Publisher
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_sContent					: STRING;
+	_aipSubscribers				: ARRAY[0..MAX_SUBSCRIBERS] OF I_Subscriber;
+END_VAR
+
+VAR CONSTANT
+	MAX_SUBSCRIBERS				: INT := 10;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="notifySubscriber" Id="{9d87c778-14da-474e-9f31-c889acbe0961}">
+      <Declaration><![CDATA[METHOD notifySubscriber : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	i						: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i:= 0 TO MAX_SUBSCRIBERS DO
+	
+	IF (_aipSubscribers[i] <> 0) THEN
+		
+		_aipSubscribers[i].update(in_sContent := CONCAT('New content available: ' , TO_STRING(_sContent)));
+		
+	END_IF
+
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="sContent" Id="{1369f8d2-a656-4164-9ea1-924d060acb11}">
+      <Declaration><![CDATA[PROPERTY sContent : STRING]]></Declaration>
+      <Get Name="Get" Id="{f1f84abf-0ffd-4a8d-b07c-24dea924d0a5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[sContent := _sContent;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{38b50fa4-b4b4-4d53-b731-088d5bd22504}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[_sContent := sContent;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="subscribe" Id="{df5e80f4-1a2a-433e-9b07-461c80a58d53}">
+      <Declaration><![CDATA[METHOD subscribe : BOOL
+VAR_INPUT
+	in_ipSubscriber		: I_Subscriber;
+END_VAR
+
+VAR
+	i						: INT;
+	iPossibleIndexToStore	: INT;
+	bPossibleSubSpotFound	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[subscribe				:= FALSE;
+bPossibleSubSpotFound	:= FALSE;
+
+// Search for free subscriber space
+FOR i:= 0 TO MAX_SUBSCRIBERS DO
+	
+	// Find free subscriber spot
+	IF (_aipSubscribers[i] = 0) AND NOT bPossibleSubSpotFound THEN
+		
+		bPossibleSubSpotFound := TRUE;
+		iPossibleIndexToStore := i;
+		
+	END_IF
+	
+	// Already subscribed
+	IF _aipSubscribers[i] = in_ipSubscriber THEN
+		
+		ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'From Publisher Already subscribed!', strArg:= '');
+		subscribe := TRUE;
+		RETURN;
+		
+	END_IF
+
+END_FOR
+
+IF bPossibleSubSpotFound THEN
+
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'From Publisher subscribtion successfull', strArg:= '');
+	_aipSubscribers[iPossibleIndexToStore] := in_ipSubscriber;
+	subscribe := TRUE;
+	RETURN;
+ELSE
+	
+	ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'From Publisher all subscrictions used', strArg:= '');
+
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="unsubscribe" Id="{b60b235b-a12d-4b84-96cd-959c724c3249}">
+      <Declaration><![CDATA[METHOD unsubscribe : BOOL
+VAR_INPUT
+	in_ipSubscriber		: I_Subscriber;
+END_VAR
+
+VAR
+	i						: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[unsubscribe				:= FALSE;
+
+// Search for subscriber
+FOR i:= 0 TO MAX_SUBSCRIBERS DO
+	
+	// Subscriber founde
+	IF _aipSubscribers[i] = in_ipSubscriber THEN
+		
+		_aipSubscribers[i] := 0;
+		ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'From Publisher successfull unsubscribed', strArg:= '');
+		unsubscribe := TRUE;
+		RETURN;
+		
+	END_IF
+
+END_FOR
+
+ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'From Publisher subscribtion not found', strArg:= '');]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
