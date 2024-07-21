@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_NotReadyState" Id="{bb69d5ce-69d5-4c8c-950e-897b187513df}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_NotReadyState IMPLEMENTS I_State
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	pfbStateMachine			:POINTER TO FB_StateMachine;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="CurrentState" Id="{54bd04e2-3162-4992-9aab-b5691ec93c27}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY CurrentState : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{6f1e3314-e78f-47d4-a646-1e0989fe5ff4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CurrentState := 'Not ready';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ErrorGone" Id="{b610ca8b-bd27-4042-b027-151c8225d94f}">
+      <Declaration><![CDATA[METHOD ErrorGone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pfbStateMachine^.SetState(pfbStateMachine^.ReadyState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ErrorOccured" Id="{1f696b30-c452-480e-938c-04e03ba70c2b}">
+      <Declaration><![CDATA[METHOD ErrorOccured
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// nothin happens]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{74e16b7f-603c-46f3-b420-1f514da61c48}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	pfbStateMachine	:POINTER TO FB_StateMachine;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pfbStateMachine := pfbStateMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartProcess" Id="{0d04ed29-d1b3-4934-96d8-59f0a62a0ed7}">
+      <Declaration><![CDATA[METHOD StartProcess
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// nothin happens]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopProcess" Id="{d94ca2c4-4abb-4951-8af8-b153516455bc}">
+      <Declaration><![CDATA[METHOD StopProcess
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// nothin happens]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

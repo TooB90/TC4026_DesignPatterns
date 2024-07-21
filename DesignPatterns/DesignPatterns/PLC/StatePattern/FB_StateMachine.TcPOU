@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_StateMachine" Id="{9a92cd65-b697-45c6-b6ed-da605afb392b}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StateMachine
+VAR_INPUT
+	in_bError				: BOOL;
+	in_bStart				: BOOL;
+	in_bStop				: BOOL;
+END_VAR
+VAR_OUTPUT
+	out_ipState				:I_State := fbNotReadyState;
+END_VAR
+VAR
+	fbNotReadyState			:FB_NotReadyState(THIS);
+	fbReadyState			:FB_ReadyState(THIS);
+	fbProcessingState		:FB_ProcessingState(THIS);
+	
+	fbRTrigStart			: R_TRIG;
+	fbRTrigStop				: R_TRIG;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbRTrigStart(CLK:= in_bStart);
+fbRTrigStop(CLK:= in_bStop);
+
+
+IF in_bError THEN
+	out_ipState.ErrorOccured();
+ELSE
+	out_ipState.ErrorGone();
+END_IF
+
+IF fbRTrigStart.Q THEN
+	out_ipState.StartProcess();
+END_IF
+
+IF fbRTrigStop.Q THEN
+	out_ipState.StopProcess();
+END_IF]]></ST>
+    </Implementation>
+    <Property Name="NotReadyState" Id="{8990e625-57ef-47ba-9bae-74814263fbc6}">
+      <Declaration><![CDATA[PROPERTY INTERNAL NotReadyState : I_State]]></Declaration>
+      <Get Name="Get" Id="{5d9372f7-ac01-46c0-9677-6bdb257922c8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[NotReadyState := THIS^.fbNotReadyState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ProcessingState" Id="{1cedefa9-aadf-46fb-9d7b-a219106fc290}">
+      <Declaration><![CDATA[PROPERTY INTERNAL ProcessingState : I_State]]></Declaration>
+      <Get Name="Get" Id="{adecd1ff-7e12-4e88-a831-26bcae16af52}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ProcessingState := THIS^.fbProcessingState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ReadyState" Id="{550c2a28-cb0f-430a-b00b-69c2e3b5a2f5}">
+      <Declaration><![CDATA[PROPERTY INTERNAL ReadyState : I_State]]></Declaration>
+      <Get Name="Get" Id="{22fb35b6-80ba-481c-a6c8-d6dd79ca97b5}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ReadyState := THIS^.fbReadyState;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="SetState" Id="{188173c0-e6f6-453a-b340-88921ef58bd6}">
+      <Declaration><![CDATA[METHOD SetState : BOOL
+VAR_INPUT
+	newState : I_State;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.out_ipState := newState;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

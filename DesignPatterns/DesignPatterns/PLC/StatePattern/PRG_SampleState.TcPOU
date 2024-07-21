@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleState" Id="{07367209-6c29-4bd0-b647-9c5ae74e8c7f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleState
+VAR
+	fbStateMachine			:FB_StateMachine;
+	sCurrentState			:STRING;
+	bBtnStart				:BOOL;
+	bBtnStop				:BOOL;
+	bError					:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbStateMachine(
+				in_bError	:= bError, 
+				in_bStart	:= bBtnStart, 
+				in_bStop	:= bBtnStop, 
+				out_ipState	=> );
+
+sCurrentState := fbStateMachine.out_ipState.CurrentState;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

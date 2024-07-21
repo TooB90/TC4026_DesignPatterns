@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ReadyState" Id="{36c9fdb3-e6ab-49de-a7fe-5e036bb9532c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ReadyState IMPLEMENTS I_State
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	pfbStateMachine			:POINTER TO FB_StateMachine;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="CurrentState" Id="{0ca99540-574f-48b3-9b4d-06ec5995ba54}">
+      <Declaration><![CDATA[{warning 'Add property implementation'}
+PROPERTY CurrentState : STRING
+]]></Declaration>
+      <Get Name="Get" Id="{a4a36545-c5af-4137-9320-2a253812bf4e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[CurrentState := 'Ready';]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="ErrorGone" Id="{d7f14794-fd43-407c-9020-2ed2e47c8529}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD ErrorGone
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// nothin happens]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ErrorOccured" Id="{36cb28aa-bff1-4711-adb2-12eab4dc839e}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD ErrorOccured
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pfbStateMachine^.SetState(pfbStateMachine^.NotReadyState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{8a0bb9ac-7310-4e19-a89d-18181f21566a}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	pfbStateMachine	:POINTER TO FB_StateMachine;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pfbStateMachine := pfbStateMachine;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StartProcess" Id="{d54bf4b0-84a4-4abc-8fc1-f2736b2301a4}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD StartProcess
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pfbStateMachine^.SetState(pfbStateMachine^.ProcessingState);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StopProcess" Id="{232eda60-1c05-4212-8672-d02f6f4aada3}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD StopProcess
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// nothing happens]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

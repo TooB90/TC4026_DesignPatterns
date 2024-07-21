@@ -142,6 +142,24 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StatePattern\FB_StateMachine.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatePattern\PRG_SampleState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatePattern\States\FB_NotReadyState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatePattern\States\FB_ProcessingState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatePattern\States\FB_ReadyState.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StatePattern\States\I_State.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -184,9 +202,11 @@
     <Folder Include="Memento\Memento" />
     <Folder Include="Memento\Caretaker" />
     <Folder Include="Memento\Originator" />
+    <Folder Include="StatePattern" />
     <Folder Include="Observer" />
     <Folder Include="Observer\Subscriber" />
     <Folder Include="Observer\Publisher" />
+    <Folder Include="StatePattern\States" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_State" Id="{7e4bdf46-6fe1-4ad5-a34a-a1394a911493}">
+    <Declaration><![CDATA[INTERFACE I_State
+]]></Declaration>
+    <Property Name="CurrentState" Id="{e320703d-028e-4b7d-8ba4-9c96866fa8f7}">
+      <Declaration><![CDATA[PROPERTY CurrentState : STRING]]></Declaration>
+      <Get Name="Get" Id="{37560c9c-f8ec-4fee-adbd-a23a55a1b79c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="ErrorGone" Id="{196b2164-7aa9-45e3-9956-d81f1df78f2f}">
+      <Declaration><![CDATA[METHOD ErrorGone
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="ErrorOccured" Id="{7a0f543e-620b-466b-bef1-3ef60125ce50}">
+      <Declaration><![CDATA[METHOD ErrorOccured
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="StartProcess" Id="{005f5047-dcca-496b-8621-253e9d3ed68d}">
+      <Declaration><![CDATA[METHOD StartProcess
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="StopProcess" Id="{02d47221-6d9c-486f-a29d-a0de3e13ac93}">
+      <Declaration><![CDATA[METHOD StopProcess
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
