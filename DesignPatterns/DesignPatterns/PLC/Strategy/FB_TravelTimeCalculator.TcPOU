@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_TravelTimeCalculator" Id="{25adcecb-89f6-4bb8-8139-f067db446ced}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TravelTimeCalculator
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	ipStrategy				: I_Strategy;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="calculateTravelTime" Id="{c2435496-b106-4b57-a23e-a8f6f75c33f3}">
+      <Declaration><![CDATA[METHOD calculateTravelTime : BOOL
+VAR_INPUT
+	in_rDistance		:REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ipStrategy.execute(in_rDistance);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_Init" Id="{7703ed9b-1fac-478a-be71-bb7f9e797395}">
+      <Declaration><![CDATA[//FB_Init is always available implicitly and it is used primarily for initialization.
+//The return value is not evaluated. For a specific influence, you can also declare the
+//methods explicitly and provide additional code there with the standard initialization
+//code. You can evaluate the return value.
+METHOD FB_Init: BOOL
+VAR_INPUT
+    bInitRetains: BOOL; // TRUE: the retain variables are initialized (reset warm / reset cold)
+    bInCopyCode: BOOL;  // TRUE: the instance will be copied to the copy code afterward (online change)   
+	ipStrategy	: I_Strategy;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ipStrategy := ipStrategy;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SetStrategy" Id="{1cffd0cf-0d0a-4288-a39d-d7a35f12feb4}">
+      <Declaration><![CDATA[METHOD SetStrategy : BOOL
+VAR_INPUT
+	in_ipNewStrategy	: I_Strategy;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ipStrategy := in_ipNewStrategy;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

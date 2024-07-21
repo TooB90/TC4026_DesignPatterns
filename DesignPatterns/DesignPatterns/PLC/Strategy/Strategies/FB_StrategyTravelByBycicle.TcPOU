@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_StrategyTravelByBycicle" Id="{448a735d-bb15-44df-8798-4980087a678a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StrategyTravelByBycicle IMPLEMENTS I_Strategy
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="execute" Id="{7f87578f-4a3c-4ac0-8f7c-41a21a3370ad}">
+      <Declaration><![CDATA[METHOD execute
+VAR_INPUT
+	in_rDistance		:REAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'Travel time by bycicle: %s min', strArg:= TO_STRING(in_rDistance * 4.0));]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

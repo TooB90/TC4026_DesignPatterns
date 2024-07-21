@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleStrategy" Id="{b3007d7f-8885-4fb2-8a1e-f072d9389c6f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleStrategy
+VAR
+	fbGoByCar						: FB_StrategyTravelByCar;
+	fbGoByTrain						: FB_StrategyTravelByTrain;
+	fbGoByBycicle					: FB_StrategyTravelByBycicle;
+	
+	fbTravelTimeCalculator			: FB_TravelTimeCalculator(fbGoByCar);
+	
+	bCalculateTime					: BOOL;
+	rDistance						: REAL := 10.0;
+	iActStrategy					: INT; // 0: By Car, 1: By Train, 2: By Bycicle
+	iOldStrategy					: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bCalculateTime THEN
+	bCalculateTime := FALSE;
+	fbTravelTimeCalculator.calculateTravelTime(rDistance);
+END_IF
+
+IF iActStrategy <> iOldStrategy THEN
+	iOldStrategy := iActStrategy;
+	
+	CASE iActStrategy OF
+	0:
+		fbTravelTimeCalculator.SetStrategy(fbGoByCar);
+	1:
+		fbTravelTimeCalculator.SetStrategy(fbGoByTrain);
+	2:
+		fbTravelTimeCalculator.SetStrategy(fbGoByBycicle);
+	ELSE
+		;
+	END_CASE;
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

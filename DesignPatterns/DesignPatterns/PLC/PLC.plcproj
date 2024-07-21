@@ -160,6 +160,24 @@
     <Compile Include="StatePattern\States\I_State.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Strategy\FB_TravelTimeCalculator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategy\PRG_SampleStrategy.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategy\Strategies\FB_StrategyTravelByTrain.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategy\Strategies\FB_StrategyTravelByCar.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategy\Strategies\FB_StrategyTravelByBycicle.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Strategy\Strategies\I_Strategy.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -202,11 +220,13 @@
     <Folder Include="Memento\Memento" />
     <Folder Include="Memento\Caretaker" />
     <Folder Include="Memento\Originator" />
+    <Folder Include="Strategy" />
     <Folder Include="StatePattern" />
     <Folder Include="Observer" />
     <Folder Include="Observer\Subscriber" />
     <Folder Include="Observer\Publisher" />
     <Folder Include="StatePattern\States" />
+    <Folder Include="Strategy\Strategies" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

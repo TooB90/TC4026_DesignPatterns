@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Strategy" Id="{695c9049-7b34-46b0-ae5a-a740e04831f2}">
+    <Declaration><![CDATA[INTERFACE I_Strategy
+]]></Declaration>
+    <Method Name="execute" Id="{bf14d6c7-87cd-4a33-a26b-5e6304addf78}">
+      <Declaration><![CDATA[METHOD execute
+VAR_INPUT
+	in_rDistance		:REAL;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
