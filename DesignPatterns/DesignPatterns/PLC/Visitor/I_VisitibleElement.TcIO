@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_VisitibleElement" Id="{07de59f1-ba5f-4884-8b50-b7eaabf92cec}">
+    <Declaration><![CDATA[INTERFACE I_VisitibleElement
+]]></Declaration>
+    <Method Name="accept" Id="{23533864-0678-4ece-bfb5-467e70d72165}">
+      <Declaration><![CDATA[METHOD accept
+VAR_INPUT
+	in_ipVisitor	: I_Visitor;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

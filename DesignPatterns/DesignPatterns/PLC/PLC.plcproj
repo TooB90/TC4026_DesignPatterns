@@ -178,6 +178,24 @@
     <Compile Include="Strategy\Strategies\I_Strategy.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Visitor\FB_ElementA.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visitor\FB_ElementB.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visitor\FB_Visitor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visitor\I_VisitibleElement.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visitor\I_Visitor.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Visitor\PRG_SampleVisitor.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <PlaceholderReference Include="Tc2_Standard">
@@ -220,6 +238,7 @@
     <Folder Include="Memento\Memento" />
     <Folder Include="Memento\Caretaker" />
     <Folder Include="Memento\Originator" />
+    <Folder Include="Visitor" />
     <Folder Include="Strategy" />
     <Folder Include="StatePattern" />
     <Folder Include="Observer" />

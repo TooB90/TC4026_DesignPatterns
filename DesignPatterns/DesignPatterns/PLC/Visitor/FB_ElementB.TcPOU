@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_ElementB" Id="{599073bd-6358-422a-8d7f-a088b040e299}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ElementB IMPLEMENTS I_VisitibleElement
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="accept" Id="{0b434423-c90c-4089-b877-d5136789fa73}">
+      <Declaration><![CDATA[METHOD accept
+VAR_INPUT
+	in_ipVisitor	: I_Visitor;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[in_ipVisitor.VisitElementB(in_fbElementB:= THIS^);]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

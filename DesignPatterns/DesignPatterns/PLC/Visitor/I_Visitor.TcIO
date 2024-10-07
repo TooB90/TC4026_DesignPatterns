@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <Itf Name="I_Visitor" Id="{8be74490-4e0b-49cb-85a9-c8f8d0afde03}">
+    <Declaration><![CDATA[INTERFACE I_Visitor
+]]></Declaration>
+    <Method Name="VisitElementA" Id="{bfbda618-9f0e-44cc-a0ba-0cd7851009e5}">
+      <Declaration><![CDATA[METHOD VisitElementA
+VAR_INPUT
+	in_fbElementA		:FB_ElementA;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="VisitElementB" Id="{9e4d5e7c-b782-442b-823c-d6b579710ecb}">
+      <Declaration><![CDATA[METHOD VisitElementB
+VAR_INPUT
+	in_fbElementB		:FB_ElementB;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

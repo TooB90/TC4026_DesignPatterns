@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="FB_Visitor" Id="{cb0b97f1-f59f-4311-9b9f-a2e71b83fde3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Visitor IMPLEMENTS I_Visitor
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="VisitElementA" Id="{b4c4afb0-bd14-4e88-88a3-24350b5a0e98}">
+      <Declaration><![CDATA[METHOD VisitElementA
+VAR_INPUT
+	in_fbElementA	: FB_ElementA;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'I visit Element A right now', strArg:= '');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="VisitElementB" Id="{4611f983-5e3e-4451-8e1f-ea3040e336f1}">
+      <Declaration><![CDATA[{warning 'Add method implementation '}
+METHOD VisitElementB
+VAR_INPUT
+	in_fbElementB	: FB_ElementB;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ADSLOGSTR(msgCtrlMask:= ADSLOG_MSGTYPE_ERROR, msgFmtStr:= 'I visit Element B right now', strArg:= '');]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1">
+  <POU Name="PRG_SampleVisitor" Id="{fff20f15-e1aa-48b0-81e8-cf63c8903751}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM PRG_SampleVisitor
+VAR
+	fbExporter					: FB_Visitor;
+	fbElementA					: FB_ElementA;
+	fbElementB					: FB_ElementB;	
+
+	bEnable						:BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//*************************************************************
+// Disable Test enviroment
+//*************************************************************	
+	IF NOT bEnable THEN
+		
+		RETURN;
+		
+	END_IF
+	
+//*************************************************************
+// Call Objects
+//*************************************************************
+	fbElementA.accept(fbExporter);
+	fbElementB.accept(fbExporter);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
